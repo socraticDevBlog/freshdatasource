@@ -1,7 +1,7 @@
 from flask import Flask, json, jsonify, request
 
 
-messages = [{"id": 1, "name": "message 1"}, {"id": 2, "name": "message 2"}]
+messages = [{"id": 1, "text": "message 1"}, {"id": 2, "text": "message 2"}]
 
 app = Flask(__name__)
 
@@ -20,28 +20,28 @@ def get_message(id):
     return jsonify(list[0])
 
 
-# curl --header "Content-Type: application/json" --request POST http://localhost:5000/message --data "{\"name\":\"message 3\"}"
+# curl --header "Content-Type: application/json" --request POST http://localhost:5000/message --data "{\"text\":\"message 3\"}"
 @app.route("/message", methods=["POST"])
 def post_message():
     request_message = request.json
 
     new_id = max([message["id"] for message in messages]) + 1
 
-    new_message = {"id": new_id, "name": request_message["name"]}
+    new_message = {"id": new_id, "text": request_message["text"]}
 
     messages.append(new_message)
 
     return jsonify(new_message), 201
 
 
-# curl --header "Content-Type: application/json" --request PUT http://localhost:5000/message/3 --data "{\"name\":\"UPDATE message 3\"}"
+# curl --header "Content-Type: application/json" --request PUT http://localhost:5000/message/3 --data "{\"text\":\"UPDATE message 3\"}"
 @app.route("/message/<int:id>", methods=["PUT"])
 def modify_message(id):
     updated_message = request.json
 
     for message in messages:
         if message["id"] == id:
-            message["name"] = updated_message["name"]
+            message["text"] = updated_message["text"]
             return jsonify(message), 200
 
     return f"message with id {id} was not found", 404
