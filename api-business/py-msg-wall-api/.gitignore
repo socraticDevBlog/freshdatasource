@@ -1,3 +1,6 @@
 env/
 .vscode/
 .DS_STORE
+
+api.db
+logs/
