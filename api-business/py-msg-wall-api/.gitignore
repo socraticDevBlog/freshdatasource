@@ -4,3 +4,4 @@ env/
 
 api.db
 logs/
+*.pyc
