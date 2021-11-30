@@ -1,4 +1,23 @@
 from flask import Flask, json, jsonify, request
+from database import Database
+from logger import Logger
+from utils import tupleToString
+
+
+# trigger DEBUG logging mode by adding integer param 10 in Terminal
+# this way :  $python job_scraper.py 10
+#
+logger_verbosity_level = Logger.LOWEST_VERBOSITY
+logger = Logger(__name__, logger_verbosity_level)
+
+
+try:    
+    db = Database()
+    # uncomment on first execution : will create a database file and a table
+    # db.create_database()
+    # OTHERWISE : ALWAYS KEEP THIS LINE COMMENTED
+except Exception as ex:
+    logger.error('unable to create database object : ' + tupleToString(ex.args))
 
 
 messages = [{"id": 1, "text": "message 1"}, {"id": 2, "text": "message 2"}]
