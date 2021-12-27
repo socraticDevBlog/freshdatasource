@@ -14,5 +14,5 @@ jobs:
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
         with:
-          source: "web-interface/*"
+          source: "web-interface"
           target: "temp"
