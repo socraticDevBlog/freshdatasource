@@ -1,4 +1,4 @@
-name: scp files
+name: deploy website
 on: [push]
 jobs:
   transfer:
