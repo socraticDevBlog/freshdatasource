@@ -16,3 +16,21 @@ jobs:
         with:
           source: "web-interface"
           target: "temp"
+
+  deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        env:
+          HOST: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+        with:
+          script: |
+            cd temp/web-interface
+            mv * /var/www/html/*
+            cd .. && rm -r web-interface
+            echo "deployed 🚀"
