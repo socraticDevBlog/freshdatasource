@@ -15,4 +15,4 @@ jobs:
           KEY: ${{ secrets.SSHKEY }}
         with:
           source: "web-interface/*"
-          target: "/var/www/html"
+          target: "temp"
