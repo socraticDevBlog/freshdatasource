@@ -1,8 +1,8 @@
 name: scp files
 on: [push]
 jobs:
-  build:
-    name: Build
+  transfer:
+    name: transfer
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -19,6 +19,7 @@ jobs:
 
   deploy:
     name: deploy
+    needs: [transfer]
     runs-on: ubuntu-latest
     steps:
       - name: executing remote ssh commands using password
