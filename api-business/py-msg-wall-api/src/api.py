@@ -1,28 +1,19 @@
 from flask import Flask, json, jsonify, request
-from database import Database
-from logger import Logger
+from db import db
 from utils import tupleToString
-
-
-# trigger DEBUG logging mode by adding integer param 10 in Terminal
-# this way :  $python job_scraper.py 10
-#
-logger_verbosity_level = Logger.LOWEST_VERBOSITY
-logger = Logger(__name__, logger_verbosity_level)
-
-
-try:    
-    db = Database()
-    # uncomment on first execution : will create a database file and a table
-    # db.create_database()
-    # OTHERWISE : ALWAYS KEEP THIS LINE COMMENTED
-except Exception as ex:
-    logger.error('unable to create database object : ' + tupleToString(ex.args))
 
 
 messages = [{"id": 1, "text": "message 1"}, {"id": 2, "text": "message 2"}]
 
 app = Flask(__name__)
+
+# setting up orm and database
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+db.init_app(app)
+
+@app.route("/")
+def debug():
+    return jsonify("oui oui")
 
 # curl -v http://localhost:5000/messages
 @app.route("/messages")
