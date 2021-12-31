@@ -2,6 +2,6 @@ services:
   msgservice:
     build: py-msg-wall-api
   web:
-    build: nginx
+    build: py-msg-wall-api/nginx
     ports:
       - "80:80"
